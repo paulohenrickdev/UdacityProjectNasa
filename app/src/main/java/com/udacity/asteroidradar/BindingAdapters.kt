@@ -3,6 +3,8 @@ package com.udacity.asteroidradar
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -10,6 +12,22 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
         imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
     } else {
         imageView.setImageResource(R.drawable.ic_status_normal)
+    }
+}
+
+@BindingAdapter("contentDescriptionByHazard")
+fun setContentDescByHazard(imgView: ImageView, isHazardous: Boolean){
+    if (isHazardous){
+        imgView.contentDescription = imgView.context.getString(R.string.potentially_hazardous_asteroid_image)
+    } else{
+        imgView.contentDescription = imgView.context.getString(R.string.not_hazardous_asteroid_image)
+    }
+}
+
+@BindingAdapter("contentDescription")
+fun setContentDescToTitle(imgView: ImageView, pod: PictureOfDay){
+    if(pod.mediaType == "image"){
+        Glide.with(imgView.context).load(pod.url).into(imgView)
     }
 }
 

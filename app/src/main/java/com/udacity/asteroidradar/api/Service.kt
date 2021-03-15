@@ -4,8 +4,8 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.PictureOfDay
 import kotlinx.coroutines.Deferred
-import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -21,7 +21,7 @@ interface NasaService {
     @GET("planetary/apod")
     fun getHeader(
         @Query("API_KEY") key: String
-    ): ResponseBody
+    ): PictureOfDay
 }
 
 private val moshi = Moshi.Builder()

@@ -6,8 +6,7 @@ import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.model.Asteroid
 import com.udacity.asteroidradar.database.DatabaseNasa
 
-@JsonClass(generateAdapter = true)
-data class NetworkAsteroidContainer(val asteroides: List<NetworkAsteroid>)
+
 
 @JsonClass(generateAdapter = true)
 data class NetworkAsteroid(
@@ -27,8 +26,6 @@ data class NetworkPod(
     val title: String,
     val url: String)
 
-/* Convert Result API to database object */
-
 fun NetworkPod.asDomainModel(): PictureOfDay {
     return PictureOfDay(
         mediaType = this.mediaType,
@@ -36,6 +33,10 @@ fun NetworkPod.asDomainModel(): PictureOfDay {
         url = this.url
     )
 }
+
+
+@JsonClass(generateAdapter = true)
+data class NetworkAsteroidContainer(val asteroides: List<NetworkAsteroid>)
 
 fun NetworkAsteroidContainer.asDomainModel(): List<Asteroid> {
     return asteroides.map {
