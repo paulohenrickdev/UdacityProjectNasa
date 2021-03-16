@@ -61,6 +61,6 @@ var TODAY_DATE : String = getTodaysDate()
 fun getTodaysDate(): String{
     val calendar = Calendar.getInstance()
     val currentTime = calendar.time
-    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.ENGLISH)
     return dateFormat.format(currentTime)
 }

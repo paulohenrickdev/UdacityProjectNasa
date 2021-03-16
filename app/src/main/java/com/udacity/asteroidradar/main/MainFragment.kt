@@ -25,11 +25,11 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-            Log.i("INFO", asteroid.toString())
+            Log.i("INFO", "SIZE: $asteroid")
         })
 
         viewModel.header.observe(viewLifecycleOwner, Observer { itensDay ->
-            println(itensDay.title)
+            Log.i("INFOHEADER", itensDay.title)
         })
 
         return binding.root
