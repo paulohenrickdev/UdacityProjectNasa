@@ -26,7 +26,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             try {
-//                getHeader()
+                getHeader()
                 asteroidsRepository.refreshAsteroides()
             }catch (e: Exception) {
                 Log.i("ERROR", "Error on corroutine scope")
@@ -36,10 +36,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val asteroids = asteroidsRepository.asteroid
 
-//    private suspend fun getHeader() {
-//        _header.value = Network.asteroideService.getHeader(
-//            key = "Eyp9Hob78QV5MC0LHTyw9h5j0JBsvhIeygxWmK6a"
-//        )
-//    }.asDomainModel()
+    private suspend fun getHeader() {
+        _header.value = Network.asteroideService.getHeader(
+            key = "Eyp9Hob78QV5MC0LHTyw9h5j0JBsvhIeygxWmK6a"
+        )
+    }
 
 }
