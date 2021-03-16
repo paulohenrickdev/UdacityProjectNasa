@@ -53,8 +53,8 @@ fun NetworkAsteroidContainer.asDomainModel(): List<Asteroid> {
     }
 }
 
-fun NetworkAsteroidContainer.asDatabaseModel(): Array<DatabaseNasa> {
-    return asteroides.map {
+fun List<Asteroid>.asDatabaseModel(): Array<DatabaseNasa> {
+    return map {
         DatabaseNasa(
             id = it.id,
             codename = it.codename,

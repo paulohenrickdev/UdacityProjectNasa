@@ -8,15 +8,16 @@ import com.udacity.asteroidradar.PictureOfDay
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface NasaService {
     @GET("neo/rest/v1/feed")
-    fun getAsteroides(
+    suspend fun getAsteroids(
         @Query("START_DATE") start: String,
         @Query("API_KEY") key: String
-    ): Deferred<NetworkAsteroidContainer>
+    ): String
 
     @GET("planetary/apod")
     fun getHeader(
@@ -32,10 +33,10 @@ private val moshi = Moshi.Builder()
 object Network {
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
-    val asteroideService = retrofit.create(NasaService::class.java)
+    val asteroidsService = retrofit.create(NasaService::class.java)
 }
 
