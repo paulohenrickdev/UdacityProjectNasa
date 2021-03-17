@@ -31,13 +31,17 @@ class MainFragment : Fragment() {
             Glide.with(requireActivity()).load(headers.url).into(binding.activityMainImageOfTheDay)
         })
 
-        val adapterAsteroidsAdapter = AsteroidsAdapter()
+//        val adapterAsteroidsAdapter = AsteroidsAdapter()
 
-        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-            adapterAsteroidsAdapter.submitList(asteroid)
+//        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+//            adapterAsteroidsAdapter.submitList(asteroid)
+//        })
+
+//        binding.asteroidRecycler.adapter = adapterAsteroidsAdapter
+        binding.asteroidRecycler.adapter = AsteroidsAdapter(AsteroidsAdapter.OnClickListener { asteroid ->
+            viewModel.navigate(asteroid)
         })
 
-        binding.asteroidRecycler.adapter = adapterAsteroidsAdapter
 
         setHasOptionsMenu(true)
 
