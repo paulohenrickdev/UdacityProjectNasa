@@ -17,7 +17,8 @@ import com.udacity.asteroidradar.repository.AsteroideRespository
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val asteroidsRepository = AsteroideRespository(getDatabase(application))
+    private val _asteroidsRepository = AsteroideRespository(getDatabase(application))
+
 
     private val _header = MutableLiveData<PictureOfDay>()
     val header: LiveData<PictureOfDay>
@@ -26,21 +27,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             try {
-                getHeader()
-                asteroidsRepository.refreshAsteroids()
+//                getHeader()
+                _asteroidsRepository.refreshAsteroids()
             }catch (e: Exception) {
                 e.printStackTrace()
                 Log.i("ERROR", "Error on corroutine scope")
+
+                //ERROR
             }
         }
     }
 
-    val asteroids = asteroidsRepository.asteroid
+    val asteroids = _asteroidsRepository.asteroid
 
-    suspend fun getHeader() {
-        _header.value = Network.asteroidsService.getHeader(
-            key = "Eyp9Hob78QV5MC0LHTyw9h5j0JBsvhIeygxWmK6a"
-        )
-    }
+//    suspend fun getHeader() {
+//        _header.value = Network.asteroidsService.getHeader(
+//            key = "Eyp9Hob78QV5MC0LHTyw9h5j0JBsvhIeygxWmK6a"
+//        )
+//    }
 
 }
