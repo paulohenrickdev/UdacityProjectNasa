@@ -11,13 +11,6 @@ import com.udacity.asteroidradar.model.Asteroid
 
 class AsteroidsAdapter : ListAdapter<Asteroid, AsteroidsAdapter.AsteroidMyViewHolder>(DiffCallback) {
 
-    var asteroidsList : List<Asteroid> = emptyList()
-        set(value) {
-            field = value
-
-            notifyDataSetChanged()
-        }
-
     class AsteroidMyViewHolder(private var binding: AsteroidItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(asteroid: Asteroid) {
             binding.asteroid = asteroid
@@ -30,7 +23,7 @@ class AsteroidsAdapter : ListAdapter<Asteroid, AsteroidsAdapter.AsteroidMyViewHo
     }
 
     override fun onBindViewHolder(holder: AsteroidMyViewHolder, position: Int) {
-        val asteroid = asteroidsList[position]
+        val asteroid = getItem(position)
         holder.bind(asteroid)
     }
 

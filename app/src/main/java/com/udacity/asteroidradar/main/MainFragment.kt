@@ -6,6 +6,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
@@ -15,16 +17,8 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    private var asteroisdAdapter: AsteroidsAdapter? = null
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-//            asteroid?.apply {
-//                asteroisdAdapter?.asteroidsList = asteroid
-//            }
-//        })
-//    }
+//    private lateinit var recyclerView: RecyclerView
+//    private var adapterAsteroidsAdapter: AsteroidsAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,21 +27,23 @@ class MainFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-            asteroid?.apply {
-                asteroisdAdapter?.asteroidsList = asteroid
-            }
+        viewModel.header.observe(viewLifecycleOwner, Observer { headers ->
+            Glide.with(requireActivity()).load(headers.url).into(binding.activityMainImageOfTheDay)
         })
+
+        val adapterAsteroidsAdapter = AsteroidsAdapter()
+
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+            adapterAsteroidsAdapter.submitList(asteroid)
+        })
+
+        binding.asteroidRecycler.adapter = adapterAsteroidsAdapter
 
         setHasOptionsMenu(true)
 
-//        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-//            Log.i("INFO", "SIZE: $asteroid")
-//        })
-
-//        viewModel.header.observe(viewLifecycleOwner, Observer { itensDay ->
-//            Log.i("INFOHEADER", itensDay.title)
-//        })
+        viewModel.header.observe(viewLifecycleOwner, Observer { itensDay ->
+            Log.i("INFOHEADER", itensDay.title)
+        })
 
         return binding.root
     }

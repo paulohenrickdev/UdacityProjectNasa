@@ -16,7 +16,7 @@ interface NasaService {
     @GET("neo/rest/v1/feed")
     suspend fun getAsteroids(
         @Query("START_DATE") start: String,
-        @Query("API_KEY") key: String
+        @Query("api_key") key: String
     ): String
 
     @GET("planetary/apod")

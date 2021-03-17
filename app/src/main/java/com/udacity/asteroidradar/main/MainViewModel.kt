@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import androidx.room.Room
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.Network
 import com.udacity.asteroidradar.api.NetworkPod
@@ -27,7 +28,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             try {
-//                getHeader()
+                getHeader()
                 _asteroidsRepository.refreshAsteroids()
             }catch (e: Exception) {
                 e.printStackTrace()
@@ -40,10 +41,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val asteroids = _asteroidsRepository.asteroid
 
-//    suspend fun getHeader() {
-//        _header.value = Network.asteroidsService.getHeader(
-//            key = "Eyp9Hob78QV5MC0LHTyw9h5j0JBsvhIeygxWmK6a"
-//        )
-//    }
+    suspend fun getHeader() {
+        _header.value = Network.asteroidsService.getHeader(Constants.API_KEY)
+        Log.i("apod", _header.value.toString())
+    }
 
 }

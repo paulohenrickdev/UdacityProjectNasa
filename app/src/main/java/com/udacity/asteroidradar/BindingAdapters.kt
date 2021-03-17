@@ -61,8 +61,8 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
 }
 
-//@BindingAdapter("listData")
-//fun bindRecyclerView(recyclerView: RecyclerView, data: List<Asteroid>?) {
-//    val adapter = recyclerView.adapter as AsteroidsAdapter
-//    adapter.submitList(data)
-//}
+@BindingAdapter("imageUrl")
+fun setImageUrl(imageView: ImageView, url: String) {
+    Glide.with(imageView.context).load(url).into(imageView)
+}
+
