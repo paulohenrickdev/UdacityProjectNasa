@@ -15,12 +15,29 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
+    private var asteroisdAdapter: AsteroidsAdapter? = null
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+//            asteroid?.apply {
+//                asteroisdAdapter?.asteroidsList = asteroid
+//            }
+//        })
+//    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+            asteroid?.apply {
+                asteroisdAdapter?.asteroidsList = asteroid
+            }
+        })
 
         setHasOptionsMenu(true)
 
