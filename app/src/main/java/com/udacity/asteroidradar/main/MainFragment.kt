@@ -57,13 +57,4 @@ class MainFragment : Fragment() {
     private fun onClickListenerNavigate() = AsteroidsAdapter.OnClickListener { asteroid ->
         viewModel.navigate(asteroid)
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return true
-    }
 }
