@@ -5,10 +5,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.main.AsteroidsAdapter
 import com.udacity.asteroidradar.model.Asteroid
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
@@ -20,17 +18,19 @@ fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
 }
 
 @BindingAdapter("contentDescriptionByHazard")
-fun setContentDescByHazard(imgView: ImageView, isHazardous: Boolean){
-    if (isHazardous){
-        imgView.contentDescription = imgView.context.getString(R.string.potentially_hazardous_asteroid_image)
-    } else{
-        imgView.contentDescription = imgView.context.getString(R.string.not_hazardous_asteroid_image)
+fun setContentDescByHazard(imgView: ImageView, isHazardous: Boolean) {
+    if (isHazardous) {
+        imgView.contentDescription =
+            imgView.context.getString(R.string.potentially_hazardous_asteroid_image)
+    } else {
+        imgView.contentDescription =
+            imgView.context.getString(R.string.not_hazardous_asteroid_image)
     }
 }
 
 @BindingAdapter("contentDescription")
-fun setContentDescToTitle(imgView: ImageView, pod: PictureOfDay){
-    if(pod.mediaType == "image"){
+fun setContentDescToTitle(imgView: ImageView, pod: PictureOfDay) {
+    if (pod.mediaType == "image") {
         Glide.with(imgView.context).load(pod.url).into(imgView)
     }
 }
