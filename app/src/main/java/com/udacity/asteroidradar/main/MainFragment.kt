@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.api.TODAY_DATE
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -17,6 +18,8 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
+
+    private val adapter = AsteroidsAdapter(onClickListenerNavigate())
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +33,7 @@ class MainFragment : Fragment() {
             Glide.with(requireActivity()).load(headers.url).into(binding.activityMainImageOfTheDay)
         })
 
-        val adapter = AsteroidsAdapter(onClickListenerNavigate())
-
-        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
-            adapter.submitList(asteroid)
-        })
+        observeAsteroids()
 
         binding.asteroidRecycler.adapter = adapter
 
@@ -54,6 +53,12 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    private fun observeAsteroids() {
+        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroid ->
+            adapter.submitList(asteroid)
+        })
+    }
+
     private fun onClickListenerNavigate() = AsteroidsAdapter.OnClickListener { asteroid ->
         viewModel.navigate(asteroid)
     }
@@ -64,6 +69,26 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.show_all_menu -> {
+                Log.i("INFO", "show_all_menu")
+                viewModel.showWeek() //
+                observeAsteroids()
+                return true
+            }
+            R.id.show_rent_menu -> {
+                Log.i("INFO", "show_rent_menu")
+                viewModel.showToday() //Chamada no banco passando a data atual
+                observeAsteroids()
+                return true
+            }
+            R.id.show_buy_menu -> {
+                Log.i("INFO", "show_buy_menu")
+                viewModel.showSaved() // getAllAsteroids
+                observeAsteroids()
+                return true
+            }
+        }
         return true
     }
 }
