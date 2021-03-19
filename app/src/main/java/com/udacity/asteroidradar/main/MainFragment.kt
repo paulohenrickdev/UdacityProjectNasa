@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.api.TODAY_DATE
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -64,6 +65,23 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.show_all_menu -> {
+                Log.i("INFO", "show_all_menu")
+                viewModel.showAll() //
+                return true
+            }
+            R.id.show_rent_menu -> {
+                Log.i("INFO", "show_rent_menu")
+                viewModel.showToday() //Chamada no banco passando a data atual
+                return true
+            }
+            R.id.show_buy_menu -> {
+                Log.i("INFO", "show_buy_menu")
+                viewModel.showSaved() // getAllAsteroids
+                return true
+            }
+        }
         return true
     }
 }

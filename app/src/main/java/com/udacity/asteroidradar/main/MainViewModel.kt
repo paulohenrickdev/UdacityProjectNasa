@@ -10,6 +10,7 @@ import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.api.Network
 import com.udacity.asteroidradar.api.NetworkPod
+import com.udacity.asteroidradar.api.TODAY_DATE
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import com.udacity.asteroidradar.api.asDomainModel
@@ -19,7 +20,8 @@ import com.udacity.asteroidradar.repository.AsteroideRespository
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _asteroidsRepository = AsteroideRespository(getDatabase(application))
+    private val database = getDatabase(application)
+    private val _asteroidsRepository = AsteroideRespository(database)
 
     private val _header = MutableLiveData<PictureOfDay>()
     val header: LiveData<PictureOfDay>
@@ -33,6 +35,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 getHeader()
+                showAll()
+                showSaved()
+                showToday()
                 _asteroidsRepository.refreshAsteroids()
             }catch (e: Exception) {
                 e.printStackTrace()
@@ -43,11 +48,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    val asteroids = _asteroidsRepository.asteroid
+
+    var asteroids = _asteroidsRepository.asteroid
 
     suspend fun getHeader() {
         _header.value = Network.asteroidsService.getHeader(Constants.API_KEY)
         Log.i("apod", _header.value.toString())
+    }
+
+    fun showAll() {
+
+    }
+
+    fun showToday() {
+        asteroids = _asteroidsRepository.asteroidToday
+    }
+
+    fun showSaved() {
+        asteroids = _asteroidsRepository.asteroidAll
     }
 
     fun navigate(asteroid: Asteroid) {

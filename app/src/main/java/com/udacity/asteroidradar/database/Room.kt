@@ -6,8 +6,17 @@ import androidx.room.*
 
 @Dao
 interface NasaDao {
-    @Query("select * from databasenasa WHERE closeApproachDate >= DATE() ORDER BY closeApproachDate ASC")
-    fun getAsteroides(): LiveData<List<DatabaseNasa>>
+//    @Query("select * from databasenasa WHERE closeApproachDate >= DATE() ORDER BY closeApproachDate ASC")
+//    fun getAsteroides(): LiveData<List<DatabaseNasa>>
+
+    @Query("select * from databasenasa WHERE closeApproachDate >= :date ORDER BY closeApproachDate ASC")
+    fun getAsteroides(date: String): LiveData<List<DatabaseNasa>>
+
+    @Query("select * from databasenasa WHERE closeApproachDate = :date ORDER BY closeApproachDate ASC")
+    fun getAsteroidesToday(date: String): LiveData<List<DatabaseNasa>>
+
+    @Query("select * from databasenasa")
+    fun getAllAsteroids(): LiveData<List<DatabaseNasa>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroid: DatabaseNasa)
