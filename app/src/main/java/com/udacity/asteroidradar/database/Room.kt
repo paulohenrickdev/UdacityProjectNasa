@@ -18,6 +18,9 @@ interface NasaDao {
     @Query("select * from databasenasa")
     fun getAllAsteroids(): LiveData<List<DatabaseNasa>>
 
+    @Query("select * from databasenasa WHERE closeApproachDate BETWEEN :sevenDay AND DATE() ")
+    fun getAsteroidsWeek(sevenDay: String): LiveData<List<DatabaseNasa>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroid: DatabaseNasa)
 

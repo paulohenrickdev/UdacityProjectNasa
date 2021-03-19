@@ -56,6 +56,17 @@ private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
     return formattedDateList
 }
 
+var SEVEN_DAYS_AGO : String = getSevenDays()
+
+fun getSevenDays(): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DATE, -7)
+    val currentTime = calendar.time
+    val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.ENGLISH)
+    return dateFormat.format(currentTime)
+}
+
+
 var TODAY_DATE : String = getTodaysDate()
 
 fun getTodaysDate(): String {

@@ -35,7 +35,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 getHeader()
-                showAll()
+                showWeek()
                 showSaved()
                 showToday()
                 _asteroidsRepository.refreshAsteroids()
@@ -56,8 +56,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         Log.i("apod", _header.value.toString())
     }
 
-    fun showAll() {
-
+    fun showWeek() {
+        asteroids = _asteroidsRepository.asteroidWeek
     }
 
     fun showToday() {
